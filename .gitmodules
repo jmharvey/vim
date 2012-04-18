@@ -1,0 +1,75 @@
+[submodule "vim/bundle/async-command"]
+	path = vim/bundle/async-command
+	url = https://github.com/vim-scripts/AsyncCommand.git
+[submodule "vim/bundle/command-t"]
+	path = vim/bundle/command-t
+	url = https://github.com/wincent/Command-T.git
+[submodule "vim/bundle/camel-case-motion"]
+	path = vim/bundle/camel-case-motion
+	url = https://github.com/vim-scripts/camelcasemotion.git
+[submodule "vim/bundle/color-support"]
+	path = vim/bundle/color-support
+	url = https://github.com/vim-scripts/colorsupport.vim.git
+[submodule "vim/bundle/conque-term"]
+	path = vim/bundle/conque-term
+	url = https://github.com/vim-scripts/Conque-Shell.git
+[submodule "vim/bundle/gundo"]
+	path = vim/bundle/gundo
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "vim/bundle/nerd-commenter"]
+	path = vim/bundle/nerd-commenter
+	url = https://github.com/vim-scripts/The-NERD-Commenter.git
+[submodule "vim/bundle/nerd-tree"]
+	path = vim/bundle/nerd-tree
+	url = https://github.com/vim-scripts/The-NERD-tree.git
+[submodule "vim/bundle/supertab"]
+	path = vim/bundle/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "vim/bundle/syntastic"]
+	path = vim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "vim/bundle/tasklist"]
+	path = vim/bundle/tasklist
+	url = https://github.com/vim-scripts/TaskList.vim.git
+[submodule "vim/bundle/commentary"]
+	path = vim/bundle/commentary
+	url = https://github.com/tpope/vim-commentary.git
+[submodule "vim/bundle/fugitive"]
+	path = vim/bundle/fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim/bundle/surround"]
+	path = vim/bundle/surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "vim/bundle/repeat"]
+	path = vim/bundle/repeat
+	url = https://github.com/tpope/vim-repeat.git
+[submodule "vim/bundle/unimpaired"]
+	path = vim/bundle/unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
+[submodule "vim/bundle/eunuch"]
+	path = vim/bundle/eunuch
+	url = https://github.com/tpope/vim-eunuch.git
+[submodule "vim/bundle/endwise"]
+	path = vim/bundle/endwise
+	url = https://github.com/tpope/vim-endwise.git
+[submodule "vim/bundle/extradite"]
+	path = vim/bundle/extradite
+	url = https://github.com/int3/vim-extradite.git
+[submodule "vim/bundle/f-switch"]
+	path = vim/bundle/f-switch
+	url = https://github.com/derekwyatt/vim-fswitch.git
+[submodule "vim/bundle/powerline"]
+	path = vim/bundle/powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
+[submodule "vim/bundle/space"]
+	path = vim/bundle/space
+	url = https://github.com/spiiph/vim-space.git
+[submodule "vim/bundle/tagbar"]
+	path = vim/bundle/tagbar
+	url = https://github.com/majutsushi/tagbar.git
+[submodule "vim/bundle/yankring"]
+	path = vim/bundle/yankring
+	url = https://github.com/vim-scripts/YankRing.vim.git
+[submodule "vim/bundle/colorschemes"]
+	path = vim/bundle/colorschemes
+	url = git@github.com:flazz/vim-colorschemes.git
