@@ -1,0 +1,4 @@
+" ; as :
+noremap ; :
+noremap , ;
+

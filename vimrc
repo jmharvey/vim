@@ -64,11 +64,6 @@ set nohlsearch
 "------------------------------------------------------------
 " Usability options {{{1
 "
-" These are options that users frequently set in their .vimrc. Some of them
-" change Vim's behaviour in ways which deviate from the true Vi way, but
-" which are considered to add usability. Which, if any, of these options to
-" use is very much a personal preference, but they are harmless.
-
 " Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
@@ -120,6 +115,24 @@ set notimeout ttimeout ttimeoutlen=200
 " Use <F11> to toggle between 'paste' and 'nopaste'
 set pastetoggle=<F11>
 
+" backup to common directory
+set backup
+set backupdir=~/.vim/backup
+set directory=~/.vim/tmp
+
+" Remove any trailing whitespace that is in the file
+autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
+
+" So we can use the system clipboard on linux
+let g:clipbrdDefaultReg = '+'
+
+"jj as return to normal mode
+map! jj <Esc>
+
+" ; as :
+noremap ; :
+noremap , ;
+
 
 "------------------------------------------------------------
 " Indentation options {{{1
@@ -151,9 +164,6 @@ map Y y$
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
-
-"jj as return to normal mode
-map! jj <Esc>
 
 "grep
 function! LocalGrep(text)
@@ -231,6 +241,9 @@ if &term =~ "xterm\\|rxvt"
     " use \003]12;gray\007 for gnome-terminal
 endif
 
+set cursorline
+hi CursorLine ctermbg=230 guibg=#303030
+
 "------------------------------------------------------------
 "folding settings
 set foldmethod=syntax
@@ -256,7 +269,7 @@ set showtabline=2
 
 "---------------------------------------------------------
 "Pathogen
-call pathogen#infect() 
+call pathogen#infect()
 call pathogen#helptags()
 
 "-----------------------------------------------------------
@@ -264,7 +277,7 @@ call pathogen#helptags()
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1 
+let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne=1
 let g:miniBufExplorerMaxSize=1
 
@@ -317,7 +330,7 @@ map <F5> <Leader>c<Space>
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
 " add current directory's generated tags file to available tags
 set tags+=./tags;/
-set tags+=~/tags/stl.tags
+set tags+=~/config/vim/vim/tags/stl.tags
 
 "-------------------------------------------------------
 "clang complete
@@ -416,16 +429,14 @@ function! NewProjectTab(name)
     tabe
     let l:dir = '~/projects/' . a:name
     exec "lcd " . l:dir
-    NERDTree
-    TagbarOpen
+    NERDTree | TagbarOpenStacked
 endfunction
 command! -nargs=1 Ptab call NewProjectTab(<f-args>)
 function! NewPathTab(path)
     tablast
     tabe
     exec "lcd " . a:path
-    NERDTree
-    TagbarOpen
+    NERDTree | TagbarOpenStacked
 endfunction
 command! -nargs=1 Ltab call NewPathTab(<f-args>)
 
@@ -434,3 +445,7 @@ command! -nargs=1 Ltab call NewPathTab(<f-args>)
 let g:syntastic_mode_map = { 'mode': 'active',
             \ 'active_filetypes': ['ruby', 'php'],
             \ 'passive_filetypes': ['cpp'] }
+
+"-----------------------------------------------------------
+"Ack
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"

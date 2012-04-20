@@ -1,2 +1,6 @@
 vim/eclim/*
 vim/plugin/eclim.vim
+*.swp
+*.swo
+vim/backup/*
+vim/tmp/*

@@ -1,5 +1,5 @@
 
-hi TabLineTitle term=bold cterm=bold ctermfg=23 ctermbg=231
+hi TabLineTitle term=bold cterm=bold ctermfg=23 ctermbg=231 gui=bold guifg=#005F87 guibg=#FFFFFF
 
 function! TabLineHeading()
     let heading = '%#TabLineTitle#'
@@ -7,8 +7,8 @@ function! TabLineHeading()
     return heading
 endfunction
 
-hi TabLineCloseStart term=bold cterm=bold ctermfg=250 ctermbg=none
-hi TabLineClose term=bold cterm=bold ctermfg=23 ctermbg=250
+hi TabLineCloseStart term=bold cterm=bold ctermfg=250 ctermbg=none gui=bold guifg=#BCBCBC guibg=#303030
+hi TabLineClose term=bold cterm=bold ctermfg=23 ctermbg=250 gui=bold guifg=#005F87 guibg=#BCBCBC
 
 function! TabLineClosing()
     let closing = '%#TabLineCloseStart#'
@@ -49,12 +49,12 @@ function! TabFilename(number)
      return filename
 endfunction
 
-hi TabFocusStart term=bold cterm=bold ctermfg=250 ctermbg=31
-hi TabFocusFirstStart term=bold cterm=bold ctermfg=231 ctermbg=31
-hi TabFocus term=bold cterm=bold ctermfg=231 ctermbg=31
-hi TabFocusCloseStart term=bold cterm=bold ctermfg=231 ctermbg=31
-hi TabFocusClose term=bold cterm=bold ctermfg=23 ctermbg=231
-hi TabFocusFillStart term=bold cterm=bold ctermfg=231 ctermbg=black
+hi TabFocusStart term=bold cterm=bold ctermfg=250 ctermbg=31 gui=bold guifg=#BCBCBC guibg=#0087AF
+hi TabFocusFirstStart term=bold cterm=bold ctermfg=231 ctermbg=31 gui=bold guifg=#FFFFFF guibg=#0087AF
+hi TabFocus term=bold cterm=bold ctermfg=231 ctermbg=31 gui=bold guifg=#FFFFFF guibg=#0087AF
+hi TabFocusCloseStart term=bold cterm=bold ctermfg=231 ctermbg=31 gui=bold guifg=#FFFFFF guibg=#0087AF
+hi TabFocusClose term=bold cterm=bold ctermfg=23 ctermbg=231 gui=bold guifg=#005F87 guibg=#FFFFFF
+hi TabFocusFillStart term=bold cterm=bold ctermfg=231 ctermbg=black gui=bold guifg=#FFFFFF guibg=#303030
 
 function! TabWithFocusClosing(number)
     let closing = '%#TabFocusCloseStart#'
@@ -81,12 +81,12 @@ function! TabWithFocus(number)
 endfunction
 
 
-hi TabNoFocusStart term=bold cterm=bold ctermfg=250 ctermbg=24
-hi TabNoFocusFirstStart term=bold cterm=bold ctermfg=231 ctermbg=24
-hi TabNoFocus term=bold cterm=bold ctermfg=117 ctermbg=24
-hi TabNoFocusCloseStart term=bold cterm=bold ctermfg=250 ctermbg=24
-hi TabNoFocusClose term=bold cterm=bold ctermfg=23 ctermbg=250
-hi TabNoFocusFillStart term=bold cterm=bold ctermfg=250 ctermbg=none
+hi TabNoFocusStart term=bold cterm=bold ctermfg=250 ctermbg=24 gui=bold guifg=#BCBCBC guibg=#005F87
+hi TabNoFocusFirstStart term=bold cterm=bold ctermfg=231 ctermbg=24 gui=bold guifg=#FFFFFF guibg=#005F87
+hi TabNoFocus term=bold cterm=bold ctermfg=117 ctermbg=24 gui=bold guifg=#60D4FF guibg=#005F87
+hi TabNoFocusCloseStart term=bold cterm=bold ctermfg=250 ctermbg=24 gui=bold guifg=#BCBCBC guibg=#005F87
+hi TabNoFocusClose term=bold cterm=bold ctermfg=23 ctermbg=250 gui=bold guifg=#005F87 guibg=#BCBCBC
+hi TabNoFocusFillStart term=bold cterm=bold ctermfg=250 ctermbg=none gui=bold guifg=#BCBCBC guibg=#303030
 
 function! TabWithoutFocusClosing(number)
     let closing = '%#TabNoFocusCloseStart#'
@@ -113,7 +113,7 @@ function! TabWithoutFocus(number)
 endfunction
 
 
-hi TabLineFill term=bold cterm=bold ctermfg=236 ctermbg=none
+hi TabLineFill term=bold cterm=bold ctermfg=236 ctermbg=none gui=bold guifg=#303030 guibg=#303030
 
 let s:pathnames = []
 if exists("+showtabline")
