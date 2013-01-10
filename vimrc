@@ -4,165 +4,52 @@
 "              newbie, basing your first .vimrc on this file is a good choice.
 "              If you're a more advanced user, building your own .vimrc based
 "              on this file is still a good idea.
+if exists("PIDA_EMBEDDED")
+    "let g:loaded_nerd_tree=1
+endif
 
-"------------------------------------------------------------
-" Features {C[MaD[MaD{{1
-"
-" These options and commands enable some very useful features in Vim, that
-" no user should have to live without.
-
-" Set 'nocompatible' to ward off unexpected things that your distro might
-" have made, as well as sanely reset options when re-sourcing .vimrc
 set nocompatible
-
-" Attempt to determine the type of a file based on its name and possibly its
-" contents.  Use this to allow intelligent auto-indenting for each filetype,
-" and for plugins that are filetype specific.
 filetype indent plugin on
-
-" Enable syntax highlighting
 syntax on
-
-" UTF-8 encoding
 set encoding=utf-8
 
-
-"------------------------------------------------------------
-" Must have options {{{1
-"
-" These are highly recommended options.
-
-" One of the most important options to activate. Allows you to switch from an
-" unsaved buffer without saving it first. Also allows you to keep an undo
-" history for multiple files. Vim will complain if you try to quit without
-" saving, and swap files will keep you safe if your computer crashes.
 set hidden
-
-" Note that not everyone likes working this way (with the hidden option).
-" Alternatives include using tabs or split windows instead of re-using the same
-" window for multiple buffers, and/or:
-" set confirm
-" set autowriteall
-
-" Better command-line completion
 set wildmenu
-
-" Show partial commands in the last line of the screen
 set showcmd
-
-" Highlight searches (use <C-L> to temporarily turn off highlighting; see the
-" mapping of <C-L> below)
 set nohlsearch
 
-" Modelines have historically been a source of security vulnerabilities.  As
-" such, it may be a good idea to disable them and use the securemodelines
-" script, <http://www.vim.org/scripts/script.php?script_id=1876>.
-" set nomodeline
-
-
-
-"------------------------------------------------------------
-" Usability options {{{1
-"
-" Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
-
-" Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
-
-" When opening a new line and no filetype-specific indenting is enabled, keep
-" the same indent as the line you're currently on. Useful for READMEs, etc.
 set autoindent
-
-" Stop certain movements from always going to the first character of a line.
-" While this behaviour deviates from that of Vi, it does what most users
-" coming from other editors would expect.
 set nostartofline
-
-" Display the cursor position on the last line of the screen or in the status
-" line of a window
 set ruler
-
-" Always display the status line, even if only one window is displayed
 set laststatus=2
-
-" Instead of failing a command because of unsaved changes, instead raise a
-" dialogue asking if you wish to save changed files.
 set confirm
-
-" Use visual bell instead of beeping when doing something wrong
 set visualbell
-
-" And reset the terminal code for the visual bell.  If visualbell is set, and
-" this line is also included, vim will neither flash nor beep.  If visualbell
-" is unset, this does nothing.
 set t_vb=
-
-" Enable use of the mouse for all modes
 set mouse=a
-
-" Set the command window height to 2 lines, to avoid many cases of having to
-" "press <Enter> to continue"
+set ttymouse=urxvt
 set cmdheight=2
-
-" Display line numbers on the left
 set number
-
-" Quickly time out on keycodes, but never time out on mappings
 set notimeout ttimeout ttimeoutlen=200
 
-" Use <F11> to toggle between 'paste' and 'nopaste'
 set pastetoggle=<F11>
-
-" backup to common directory
 set backup
 set backupdir=~/.vim/backup
 set directory=~/.vim/tmp
 
-" Remove any trailing whitespace that is in the file
-autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
-
-" So we can use the system clipboard on linux
 let g:clipbrdDefaultReg = '+'
-
-"jj as return to normal mode
-map! jj <Esc>
-
-" ; as :
+"map! jj <Esc>
 noremap ; :
 noremap , ;
 
-
-"------------------------------------------------------------
-" Indentation options {{{1
-"
-" Indentation settings according to personal preference.
-
-" Indentation settings for using 2 spaces instead of tabs.
-" Do not change 'tabstop' from its default value of 8 with this setup.
 set shiftwidth=4
 set softtabstop=4
 set expandtab
 set tabstop=4
 
-" Indentation settings for using hard tabs for indent. Display tabs as
-" two characters wide.
-"set shiftwidth=2
-"set tabstop=2
-
-
-"------------------------------------------------------------
-" Mappings {{{1
-"
-" Useful mappings
-
-" Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
-" which is the default
 map Y y$
-
-" Map <C-L> (redraw screen) to also turn off search highlighting until the
-" next search
 nnoremap <C-L> :nohl<CR><C-L>
 
 "grep
@@ -211,19 +98,20 @@ endfunction
 nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 nmap <silent> <leader>e :call ToggleList("Quickfix List", 'c')<CR>
 
-"------------------------------------------------------------
-
-" automatically change to the directory of the current file
-" set autochdir
-
-" default to no line wrapping
 set nowrap
-
-" don't automatically resize windows
 set noequalalways
+nmap <silent> <C-h> :wincmd h<CR>
+nmap <silent> <C-j> :wincmd j<CR>
+nmap <silent> <C-k> :wincmd k<CR>
+nmap <silent> <C-l> :wincmd l<CR>
+"nmap <silent> <C-=> :wincmd =<CR>
+"nmap <silent> <C--> :wincmd _<CR>
+"nmap <silent> <C-|> :wincmd |<CR>
+set winminheight=0
+set winheight=1
 
 " set font
-set guifont=Monospace\ 9
+set guifont=Monospace\ 8
 
 "set highlighting for bash vi mode
 au BufRead,BufNewFile bash-fc-* set filetype=sh
@@ -238,7 +126,15 @@ if &term =~ "xterm\\|rxvt"
     silent !echo -ne "\033]12;red\007"
     " reset cursor when vim exits
     autocmd VimLeave * silent !echo -ne "\033]12;gray\007"
-    " use \003]12;gray\007 for gnome-terminal
+endif
+if &term =~ "screen-256color"
+    autocmd VimEnter * silent !echo -ne "\033Ptmux;\033\033]12;red\033\\"
+    " use an orange cursor in insert mode
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]12;orange\x7\<Esc>\\"
+    " use a red cursor otherwise
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]12;red\x7\<Esc>\\"
+    " reset cursor when vim exits
+    autocmd VimLeave * silent !echo -ne "\033Ptmux;\033\033]12;red\033\\"
 endif
 
 set cursorline
@@ -253,46 +149,23 @@ set foldlevel=0
 set foldcolumn=1
 
 "---------------------------------------------------------
-"Window management
-"set winheight=20
-"set winminheight=20
-set winwidth=40
-set winminwidth=40
-nmap <silent> <C-h> :wincmd h<CR>
-nmap <silent> <C-j> :wincmd j<CR>
-nmap <silent> <C-k> :wincmd k<CR>
-nmap <silent> <C-l> :wincmd l<CR>
-imap <C-w> <C-o><C-w>
-set autowrite
-set autowriteall
-set showtabline=2
-
-"---------------------------------------------------------
 "Pathogen
 call pathogen#infect()
 call pathogen#helptags()
-
-"-----------------------------------------------------------
-"MiniBufferExplorer
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplorerMoreThanOne=1
-let g:miniBufExplorerMaxSize=1
 
 "----------------------------------------------------------
 "FSwitch - goto header/source file
 map <F6> :FSHere<CR>
 map! <F6> <Esc>:FSHere<CR>
-au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.,../include,./include'
-au! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..'
-au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..'
+au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.,../include,./include/,./include/*,./include/*/*'
+au! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*'
+au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,./src/*/*'
 
 "---------------------------------------------------------
 "TagBar
 map <F8> :TagbarToggle<CR>
 map! <F8> <Esc>:TagbarToggle<CR>
+let g:tagbar_width=45
 
 "--------------------------------------------------------
 "NERD Tree
@@ -300,29 +173,13 @@ map <F7> :NERDTreeToggle<CR>
 map! <F7> <Esc>:NERDTreeToggle<CR>
 let NERDTreeIgnore=['\.o$', '\~$']
 let NERDTreeShowBookmarks=1
-let NERDTreeWinSize=35
+let NERDTreeWinSize=45
 let NERDTreeDirArrows=1
+let NERDTreeWinPos='right'
 
 "---------------------------------------------------------
 "NERD Commenter
 map <F5> <Leader>c<Space>
-
-""--------------------------------------------------------
-"" --- OmniCppComplete ---
-"" -- required --
-"set nocp " non vi compatible mode
-"filetype plugin on " enable plugins
-"" -- optional --
-"" auto close options when exiting insert mode
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-"set completeopt=menu,menuone
-"" -- configs --
-"let OmniCpp_MayCompleteDot = 1 " autocomplete with .
-"let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
-"let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
-"let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
-"let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
-"let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup windowlist
 
 "------------------------------------------------------------
 "ctags
@@ -334,12 +191,20 @@ set tags+=~/config/vim/vim/tags/stl.tags
 
 "-------------------------------------------------------
 "clang complete
-"let g:clang_use_library=1
-"let g:clang_library_path="/usr/local/lib/"
+let g:clang_use_library=1
+let g:clang_library_path="/home/jharvey/bin/llvm/build/lib"
+let g:clang_complete_copen=1
+let g:clang_snippets=1
+let g:clang_trailing_placeholder=1
+let g:clang_user_options='-std=c++11'
+let g:clang_complete_macros=1
+let g:clang_complete_patterns=1
+map <F2>  :call g:ClangUpdateQuickFix()<CR>
+set completeopt-=preview
 
 "----------------------------------------------------
 "PowerLine
-let g:Powerline_symbols="unicode"
+let g:Powerline_symbols="compatible"
 
 "---------------------------------------------------
 "Command-T
@@ -356,12 +221,13 @@ colorscheme custom_kellys
 
 "-----------------------------------------------------------
 "Gundo
+let g:gundo_right=1
 map <F9> :GundoToggle<CR>
 map! <F9> <Esc>:GundoToggle<CR>
 
 "-----------------------------------------------------------
 "AyncCommand
-set makeprg=build.sh
+set makeprg=/home/jharvey/scripts/make_project.sh
 
 function! AsyncInstall()
     let cmd = "./install_test.py"
@@ -379,6 +245,7 @@ nnoremap <silent> <Leader>mi :AsyncInstall<CR>
 "----------------------------------------------------------------
 "TaskList
 let g:tlWindowPosition = 1
+map <leader>X <Plug>TaskList
 
 "---------------------------------------------------------------
 "Fugitive
@@ -406,8 +273,9 @@ let g:ConqueTerm_CloseOnEnd=1
 let g:ConqueTerm_CWInsert=1
 let g:ConqueTerm_SendVisKey ='<Leader>sp'
 let g:ConqueTerm_ToggleKey = '<Leader>st'
+let g:ConqueTerm_TERM = 'xterm'
 
-nnoremap <silent> <Leader>sh :botright sp<CR>:resize 20<CR>:ConqueTerm bash<CR>
+nnoremap <silent> <Leader>sh :botright sp<CR>:resize 20<CR>:ConqueTerm zsh<CR>
 
 "---------------------------------------------------------------
 "eclim
@@ -448,4 +316,32 @@ let g:syntastic_mode_map = { 'mode': 'active',
 
 "-----------------------------------------------------------
 "Ack
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+let g:ackprg="/home/jharvey/scripts/ack -H --nocolor --nogroup --column"
+
+"-----------------------------------------------------------
+"QuickHL
+nmap <Leader>h <Plug>(quickhl-toggle)
+xmap <Leader>h <Plug>(quickhl-toggle)
+nmap <Leader>H <Plug>(quickhl-reset)
+xmap <Leader>H <Plug>(quickhl-reset)
+nnoremap <silent> <Leader>j :QuickhlMatchAuto<CR>
+nnoremap <silent> <Leader>J :QuickhlMatchNoAuto<CR>:QuickhlMatchClear<CR>
+
+"----------------------------------------------------------
+"TryIt
+let g:tryit_dir = "$HOME/.vim/tryit"
+nmap  <Leader>t <Plug>(tryit-this)
+xmap  <Leader>t <Plug>(tryit-this)
+nmap  <Leader>T <Plug>(tryit-ask)
+xmap  <Leader>T <Plug>(tryit-ask)
+
+"--------------------------------------------------------
+"QuickRun
+let g:quickrun_config = {}
+let g:quickrun_config.cpp = {
+            \   'type': 'cpp/clang++',
+            \   'command': '/home/jharvey/bin/llvm/build/bin/clang++',
+            \   'exec': ['%c %o %s -o %s:p:r', '%s:p:r %a'],
+            \   'tempfile': '%{tempname()}.cpp',
+            \   'hook/sweep/files': ['%S:p:r'],
+            \ }

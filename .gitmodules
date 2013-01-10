@@ -85,3 +85,21 @@
 [submodule "vim/bundle/ack"]
 	path = vim/bundle/ack
 	url = https://github.com/mileszs/ack.vim.git
+[submodule "vim/bundle/cpp11-syntax-support"]
+	path = vim/bundle/cpp11-syntax-support
+	url = https://github.com/proyvind/Cpp11-Syntax-Support.git
+[submodule "vim/bundle/clang_complete"]
+	path = vim/bundle/clang_complete
+	url = https://github.com/Rip-Rip/clang_complete.git
+[submodule "vim/bundle/signature"]
+	path = vim/bundle/signature
+	url = https://github.com/kshenoy/vim-signature.git
+[submodule "vim/bundle/quickhl"]
+	path = vim/bundle/quickhl
+	url = https://github.com/t9md/vim-quickhl.git
+[submodule "vim/bundle/quickrun"]
+	path = vim/bundle/quickrun
+	url = https://github.com/thinca/vim-quickrun.git
+[submodule "vim/bundle/tryit"]
+	path = vim/bundle/tryit
+	url = https://github.com/t9md/vim-tryit.git
