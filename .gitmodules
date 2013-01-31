@@ -69,7 +69,7 @@
 	url = https://github.com/vim-scripts/YankRing.vim.git
 [submodule "vim/bundle/colorschemes"]
 	path = vim/bundle/colorschemes
-	url = git@github.com:flazz/vim-colorschemes.git
+	url = https://github.com:flazz/vim-colorschemes.git
 [submodule "vim/bundle/conque-term"]
 	path = vim/bundle/conque-term
 	url = https://github.com/lrvick/Conque-Shell.git
