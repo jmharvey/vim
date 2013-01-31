@@ -100,3 +100,6 @@
 [submodule "vim/bundle/tryit"]
 	path = vim/bundle/tryit
 	url = https://github.com/t9md/vim-tryit.git
+[submodule "vim/bundle/powerline"]
+	path = vim/bundle/powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
