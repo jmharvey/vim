@@ -55,9 +55,6 @@
 [submodule "vim/bundle/f-switch"]
 	path = vim/bundle/f-switch
 	url = https://github.com/derekwyatt/vim-fswitch.git
-[submodule "vim/bundle/powerline"]
-	path = vim/bundle/powerline
-	url = https://github.com/Lokaltog/vim-powerline.git
 [submodule "vim/bundle/space"]
 	path = vim/bundle/space
 	url = https://github.com/spiiph/vim-space.git
