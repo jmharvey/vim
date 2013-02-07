@@ -316,3 +316,6 @@ let g:quickrun_config.cpp = {
             \   'tempfile': '%{tempname()}.cpp',
             \   'hook/sweep/files': ['%S:p:r'],
             \ }
+
+"YankRing {{{2
+let g:yankring_history_dir='$HOME/.vim/tmp'
