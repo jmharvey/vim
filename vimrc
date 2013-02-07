@@ -1,13 +1,14 @@
-" URL: http://vim.wikia.com/wiki/Example_vimrc
-" Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
-" Description: A minimal, but feature rich, example .vimrc. If you are a
-"              newbie, basing your first .vimrc on this file is a good choice.
-"              If you're a more advanced user, building your own .vimrc based
-"              on this file is still a good idea.
-if exists("PIDA_EMBEDDED")
-    "let g:loaded_nerd_tree=1
+" .VIMRC
+" ~~~~~~~
+" vim: foldmethod=marker
+
+" general {{{1
+" Source the vimrc file after saving it {{{2
+if has("autocmd")
+   autocmd bufwritepost .vimrc source $MYVIMRC
 endif
 
+" misc {{{2
 set nocompatible
 filetype indent plugin on
 syntax on
@@ -22,6 +23,7 @@ set ignorecase
 set smartcase
 set backspace=indent,eol,start
 set autoindent
+set cinoptions=N-s
 set nostartofline
 set ruler
 set laststatus=2
@@ -29,7 +31,11 @@ set confirm
 set visualbell
 set t_vb=
 set mouse=a
-set ttymouse=urxvt
+"if $TMUX == ""
+    "set ttymouse=urxvt
+"else
+    set ttymouse=xterm2
+"endif
 set cmdheight=2
 set number
 set notimeout ttimeout ttimeoutlen=200
@@ -52,7 +58,7 @@ set tabstop=4
 map Y y$
 nnoremap <C-L> :nohl<CR><C-L>
 
-"grep
+"grep {{{2
 function! LocalGrep(text)
     exec "lvimgrep /" . a:text . "/j **"
     lopen
@@ -63,11 +69,11 @@ map <F4> call LocalGrep(expand("<cword>"))
 command! -nargs=1 Lgrep call LocalGrep(<f-args>)
 
 
-"go to definition
+"go to definition {{{2
 "map <F3> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 "map <F3> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-"toggle for quickfix and location list menus
+"toggle for quickfix and location list menus {{{2
 function! GetBufferList()
   redir =>buflist
   silent! ls
@@ -98,6 +104,7 @@ endfunction
 nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 nmap <silent> <leader>e :call ToggleList("Quickfix List", 'c')<CR>
 
+" window mgmt {{{2
 set nowrap
 set noequalalways
 nmap <silent> <C-h> :wincmd h<CR>
@@ -110,14 +117,18 @@ nmap <silent> <C-l> :wincmd l<CR>
 set winminheight=0
 set winheight=1
 
-" set font
+"Colour Schemes {{{2
+set t_Co=256
+set background=dark
+colorscheme custom_kellys
+
+" set font {{{2
 set guifont=Monospace\ 8
 
-"set highlighting for bash vi mode
+"set highlighting for bash vi mode {{{2
 au BufRead,BufNewFile bash-fc-* set filetype=sh
 
-"----------------------------------------------------------
-"Configure the cursor
+"Configure the cursor {{{2
 if &term =~ "xterm\\|rxvt"
     " use an orange cursor in insert mode
     let &t_SI = "\<Esc>]12;orange\x7"
@@ -140,35 +151,42 @@ endif
 set cursorline
 hi CursorLine ctermbg=230 guibg=#303030
 
-"------------------------------------------------------------
-"folding settings
+"folding settings {{{2
 set foldmethod=syntax
 set foldnestmax=1
 set foldenable
 set foldlevel=0
-set foldcolumn=1
+set foldcolumn=2
 
-"---------------------------------------------------------
-"Pathogen
+"ctags {{{2
+" map <ctrl>+F12 to generate ctags for current folder:
+au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
+map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
+" add current directory's generated tags file to available tags
+set tags+=./tags;/
+set tags+=~/config/vim/vim/tags/stl.tags
+
+" cpp syntax {{{2
+let c_no_curly_error=1
+
+" plugins {{{1
+"Pathogen {{{2
 call pathogen#infect()
 call pathogen#helptags()
 
-"----------------------------------------------------------
-"FSwitch - goto header/source file
+"FSwitch - goto header/source file {{{2
 map <F6> :FSHere<CR>
 map! <F6> <Esc>:FSHere<CR>
 au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.,../include,./include/,./include/*,./include/*/*'
 au! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*'
 au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,./src/*/*'
 
-"---------------------------------------------------------
-"TagBar
+"TagBar {{{2
 map <F8> :TagbarToggle<CR>
 map! <F8> <Esc>:TagbarToggle<CR>
 let g:tagbar_width=45
 
-"--------------------------------------------------------
-"NERD Tree
+"NERD Tree {{{2
 map <F7> :NERDTreeToggle<CR>
 map! <F7> <Esc>:NERDTreeToggle<CR>
 let NERDTreeIgnore=['\.o$', '\~$']
@@ -176,21 +194,12 @@ let NERDTreeShowBookmarks=1
 let NERDTreeWinSize=45
 let NERDTreeDirArrows=1
 let NERDTreeWinPos='right'
+let NERDTreeHijackNetrw=1
 
-"---------------------------------------------------------
-"NERD Commenter
+"NERD Commenter {{{2
 map <F5> <Leader>c<Space>
 
-"------------------------------------------------------------
-"ctags
-" map <ctrl>+F12 to generate ctags for current folder:
-map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
-" add current directory's generated tags file to available tags
-set tags+=./tags;/
-set tags+=~/config/vim/vim/tags/stl.tags
-
-"-------------------------------------------------------
-"clang complete
+"clang complete {{{2
 let g:clang_use_library=1
 let g:clang_library_path="/home/jharvey/bin/llvm/build/lib"
 let g:clang_complete_copen=1
@@ -202,31 +211,21 @@ let g:clang_complete_patterns=1
 map <F2>  :call g:ClangUpdateQuickFix()<CR>
 set completeopt-=preview
 
-"----------------------------------------------------
-"PowerLine
+"PowerLine {{{2
 let g:Powerline_symbols="compatible"
 
-"---------------------------------------------------
-"Command-T
+"Command-T {{{2
 nnoremap <silent> <Leader>f :CommandT<CR>
 nnoremap <silent> <Leader>b :CommandTBuffer<CR>
 let g:CommandTMaxHeight=50
 set wildignore+=*.o,*.so
 
-"-----------------------------------------------------------
-"Colour Schemes
-set t_Co=256
-set background=dark
-colorscheme custom_kellys
-
-"-----------------------------------------------------------
-"Gundo
+"Gundo {{{2
 let g:gundo_right=1
 map <F9> :GundoToggle<CR>
 map! <F9> <Esc>:GundoToggle<CR>
 
-"-----------------------------------------------------------
-"AyncCommand
+"AyncCommand {{{2
 set makeprg=/home/jharvey/scripts/make_project.sh
 
 function! AsyncInstall()
@@ -242,16 +241,13 @@ nnoremap <silent> <Leader>mc :AsyncMake "make clean && cmake . && make"<CR>
 nnoremap <silent> <Leader>mi :AsyncInstall<CR>
 
 
-"----------------------------------------------------------------
-"TaskList
+"TaskList {{{2
 let g:tlWindowPosition = 1
 map <leader>X <Plug>TaskList
 
-"---------------------------------------------------------------
-"Fugitive
+"Fugitive {{{2
 
-"------------------------------------------------------------------
-"CamelCaseMovement
+"CamelCaseMovement {{{2
 map w <Plug>CamelCaseMotion_w
 map b <Plug>CamelCaseMotion_b
 map e <Plug>CamelCaseMotion_e
@@ -265,8 +261,7 @@ xmap ib <Plug>CamelCaseMotion_ib
 omap ie <Plug>CamelCaseMotion_ie
 xmap ie <Plug>CamelCaseMotion_ie
 
-"-------------------------------------------------------------------
-"Conque Terminal
+"Conque Terminal {{{2
 let g:ConqueTerm_Color=2
 let g:ConqueTerm_InsertOnEnter=1
 let g:ConqueTerm_CloseOnEnd=1
@@ -277,49 +272,27 @@ let g:ConqueTerm_TERM = 'xterm'
 
 nnoremap <silent> <Leader>sh :botright sp<CR>:resize 20<CR>:ConqueTerm zsh<CR>
 
-"---------------------------------------------------------------
-"eclim
+"eclim {{{2
 let g:EclimCSearchSingleResult='lopen'
 let g:EclimCHierarchyDefaultAction='vsplit'
 "let g:EclimProjectTreeAutoOpen=1
 let g:EclimProjectTreeExpandPathOnOpen=1
 
-"-----------------------------------------------------------------
-"SuperTab
+"SuperTab {{{2
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
 let g:SuperTabClosePreviewOnPopupClose = 1
 
-"-------------------------------------------------------------
-"Project function
-function! NewProjectTab(name)
-    tablast
-    tabe
-    let l:dir = '~/projects/' . a:name
-    exec "lcd " . l:dir
-    NERDTree | TagbarOpenStacked
-endfunction
-command! -nargs=1 Ptab call NewProjectTab(<f-args>)
-function! NewPathTab(path)
-    tablast
-    tabe
-    exec "lcd " . a:path
-    NERDTree | TagbarOpenStacked
-endfunction
-command! -nargs=1 Ltab call NewPathTab(<f-args>)
 
-"------------------------------------------------------------
-"Syntastic
+"Syntastic {{{2
 let g:syntastic_mode_map = { 'mode': 'active',
             \ 'active_filetypes': ['ruby', 'php'],
             \ 'passive_filetypes': ['cpp'] }
 
-"-----------------------------------------------------------
-"Ack
+"Ack {{{2
 let g:ackprg="/home/jharvey/scripts/ack -H --nocolor --nogroup --column"
 
-"-----------------------------------------------------------
-"QuickHL
+"QuickHL {{{2
 nmap <Leader>h <Plug>(quickhl-toggle)
 xmap <Leader>h <Plug>(quickhl-toggle)
 nmap <Leader>H <Plug>(quickhl-reset)
@@ -327,16 +300,14 @@ xmap <Leader>H <Plug>(quickhl-reset)
 nnoremap <silent> <Leader>j :QuickhlMatchAuto<CR>
 nnoremap <silent> <Leader>J :QuickhlMatchNoAuto<CR>:QuickhlMatchClear<CR>
 
-"----------------------------------------------------------
-"TryIt
+"TryIt {{{2
 let g:tryit_dir = "$HOME/.vim/tryit"
 nmap  <Leader>t <Plug>(tryit-this)
 xmap  <Leader>t <Plug>(tryit-this)
 nmap  <Leader>T <Plug>(tryit-ask)
 xmap  <Leader>T <Plug>(tryit-ask)
 
-"--------------------------------------------------------
-"QuickRun
+"QuickRun {{{2
 let g:quickrun_config = {}
 let g:quickrun_config.cpp = {
             \   'type': 'cpp/clang++',
