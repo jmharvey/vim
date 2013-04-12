@@ -73,6 +73,9 @@ command! -nargs=1 Lgrep call LocalGrep(<f-args>)
 "map <F3> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 "map <F3> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
+"set path for jump to include {{{2
+set path=$PWD/**,/projects/AlgoServer/**,/projects/AlgoUtils/**,/projects/**,/repository/**
+
 "toggle for quickfix and location list menus {{{2
 function! GetBufferList()
   redir =>buflist
@@ -201,7 +204,7 @@ map <F5> <Leader>c<Space>
 
 "clang complete {{{2
 let g:clang_use_library=1
-let g:clang_library_path="/home/jharvey/bin/llvm/build/lib"
+let g:clang_library_path="/usr/local/lib"
 let g:clang_complete_copen=1
 let g:clang_snippets=1
 let g:clang_trailing_placeholder=1
