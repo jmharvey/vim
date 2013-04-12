@@ -45,7 +45,7 @@ set backup
 set backupdir=~/.vim/backup
 set directory=~/.vim/tmp
 
-let g:clipbrdDefaultReg = '+'
+let g:clipbrdDefaultReg = '*'
 "map! jj <Esc>
 noremap ; :
 noremap , ;
@@ -130,6 +130,9 @@ set guifont=Monospace\ 8
 
 "set highlighting for bash vi mode {{{2
 au BufRead,BufNewFile bash-fc-* set filetype=sh
+
+"set CMakeCommon.txt to to have cmake filetype
+au BufRead,BufNewFile CMakeCommon.txt set filetype=cmake
 
 "Configure the cursor {{{2
 if &term =~ "xterm\\|rxvt"
