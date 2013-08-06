@@ -106,3 +106,6 @@
 [submodule "vim/bundle/tbone"]
 	path = vim/bundle/tbone
 	url = https://github.com/tpope/vim-tbone.git
+[submodule "vim/bundle/template"]
+	path = vim/bundle/template
+	url = https://github.com/jmharvey/vim-template.git
