@@ -31,11 +31,7 @@ set confirm
 set visualbell
 set t_vb=
 set mouse=a
-"if $TMUX == ""
-    "set ttymouse=urxvt
-"else
-    set ttymouse=xterm2
-"endif
+set ttymouse=sgr
 set cmdheight=2
 set number
 set notimeout ttimeout ttimeoutlen=200
@@ -158,11 +154,11 @@ set cursorline
 hi CursorLine ctermbg=230 guibg=#303030
 
 "folding settings {{{2
-set foldmethod=syntax
-set foldnestmax=1
-set foldenable
-set foldlevel=0
-set foldcolumn=2
+"set foldmethod=syntax
+"set foldnestmax=1
+"set foldenable
+"set foldlevel=0
+"set foldcolumn=2
 
 "ctags {{{2
 " map <ctrl>+F12 to generate ctags for current folder:
@@ -232,10 +228,10 @@ map <F9> :GundoToggle<CR>
 map! <F9> <Esc>:GundoToggle<CR>
 
 "AyncCommand {{{2
-set makeprg=/home/jharvey/scripts/make_project.sh
+set makeprg=/home/jharvey/scripts/make.sh
 
-function! AsyncInstall()
-    let cmd = "./install_test.py"
+function! AsyncRunTests()
+    let cmd = "./run_tests.sh
     let title = "Install"
     call asynccommand#run(cmd, asynchandler#quickfix("%f", ""))
 endfunction
@@ -317,7 +313,7 @@ xmap  <Leader>T <Plug>(tryit-ask)
 let g:quickrun_config = {}
 let g:quickrun_config.cpp = {
             \   'type': 'cpp/clang++',
-            \   'command': '/home/jharvey/bin/llvm/build/bin/clang++',
+            \   'command': '/usr/local/bin/clang++',
             \   'exec': ['%c %o %s -o %s:p:r', '%s:p:r %a'],
             \   'tempfile': '%{tempname()}.cpp',
             \   'hook/sweep/files': ['%S:p:r'],
@@ -325,3 +321,30 @@ let g:quickrun_config.cpp = {
 
 "YankRing {{{2
 let g:yankring_history_dir='$HOME/.vim/tmp'
+
+"set efm=%*[^"]"%f"%*\D%l: %m,"%f"%*\D%l: %m,%-G%f:%l: (Each undeclared identifier is reported only once,%-G%f:%l: for each function it appears in.),%-GIn file included from %f:%l:%c:,%-GIn file included from %f:%l:%c\,,%-GIn file included from %f:%l:%c,%-GIn file included from %f:%l,%-G%*[ ]from %f:%l:%c,%-G%*[ ]from %f:%l:,%-G%*[ ]from %f:%l\,,%-G%*[ ]from %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,"%f"\, line %l%*\D%c%*[^ ] %m,%D%*\a[%*\d]: Entering directory `%f',%X%*\a[%*\d]: Leaving directory `%f',%D%*\a: Entering directory `%f',%X%*\a: Leaving directory `%f',%DMaking %*\a in %f,%f|%l| %m
+"set efm=%*[^\"]\"%f\"%*\D%l:\ %m,\"%f\"%*\D%l:\ %m,%-G%f:%l:\ (Each\ undeclared\ identifier\ is\ reported\ only\ once,%-G%f:%l:\ for\ each\ function\ it\ appears\ in.),%-GIn\ file\ included\ from\ %f:%l:%c:,%-GIn\ file\ included\ from\ %f:%l:%c\,,%-GIn\ file\ included\ from\ %f:%l:%c,%-GIn\ file\ included\ from\ %f:%l,%-G%*[\ ]from\ %f:%l:%c,%-G%*[\ ]from\ %f:%l:,%-G%*[\ ]from\ %f:%l\,,%-G%*[\ ]from\ %f:%l,%f:%l:%c:%m,%f(%l):%m,\ line\ %l%*\D%c%*[^\ ]\ %m,%D%*\a[%*\d]:\ Entering\ directory\ `%f',%X%*\a[%*\d]:\ Leaving\ directory\ `%f',%D%*\a:\ Entering\ directory\ `%f',%X%*\a:\ Leaving\ directory\ `%f',%DMaking\ %*\a\ in\ %f,%f|%l|\ %m
+"set efm=%*[^"]"%f"%*\D%l: %m
+"set efm="%f"%*\D%l: %m
+"set efm=%-G%f:%l: (Each undeclared identifier is reported only once
+"set efm=%-G%f:%l: for each function it appears in.)
+"set efm=%-GIn file included from %f:%l:%c:
+"set efm=%-GIn file included from %f:%l:%c\
+"set efm=%-GIn file included from %f:%l:%c\
+"set efm=%-GIn file included from %f:%l:%c
+"set efm=%-GIn file included from %f:%l
+"set efm=%-G%*[ ]from %f:%l:%c
+"set efm=%-G%*[ ]from %f:%l:
+"set efm=%-G%*[ ]from %f:%l\
+"set efm=%-G%*[ ]from %f:%l
+"set efm=%f:%l:%c:%m
+"set efm=%f(%l):%m
+"set efm=%f:%l:%m
+"set efm="%f"\
+"set efm= line %l%*\D%c%*[^ ] %m
+"set efm=%D%*\a[%*\d]: Entering directory `%f'
+"set efm=%X%*\a[%*\d]: Leaving directory `%f'
+"set efm=%D%*\a: Entering directory `%f'
+"set efm=%X%*\a: Leaving directory `%f'
+"set efm=%DMaking %*\a in %f,%f|%l| %m
+

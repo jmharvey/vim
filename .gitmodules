@@ -67,9 +67,6 @@
 [submodule "vim/bundle/colorschemes"]
 	path = vim/bundle/colorschemes
 	url = https://github.com/flazz/vim-colorschemes.git
-[submodule "vim/bundle/conque-term"]
-	path = vim/bundle/conque-term
-	url = https://github.com/lrvick/Conque-Shell.git
 [submodule "vim/bundle/indent-guides"]
 	path = vim/bundle/indent-guides
 	url = https://github.com/nathanaelkane/vim-indent-guides.git
@@ -103,6 +100,9 @@
 [submodule "vim/bundle/powerline"]
 	path = vim/bundle/powerline
 	url = https://github.com/Lokaltog/vim-powerline.git
-[submodule "vim/bundle/template"]
-	path = vim/bundle/template
-	url = https://github.com/aperezdc/vim-template.git
+[submodule "vim/bundle/dispatch"]
+	path = vim/bundle/dispatch
+	url = https://github.com/tpope/vim-dispatch.git
+[submodule "vim/bundle/tbone"]
+	path = vim/bundle/tbone
+	url = https://github.com/tpope/vim-tbone.git
