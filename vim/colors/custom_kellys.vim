@@ -45,6 +45,7 @@ if has("gui_running")
 	hi Cursor 		guifg=#2a2b2f	guibg=#e1e0e5	gui=none
 	hi Constant 	guifg=#d1c79e	guibg=#2a2b2f	gui=none
 	hi CursorLine		          	guibg=#303132	gui=none
+    hi ColorColumn                  guibg=#262626   gui=none
 	hi DiffAdd		guifg=#2a2b2f	guibg=#9ab2c8	gui=none
 	hi DiffChange	guifg=#2a2b2f	guibg=#d1c79e	gui=none
 	hi DiffDelete	guifg=#67686b	guibg=#2a2b2f	gui=none
@@ -73,7 +74,8 @@ else
 		hi Comment		ctermfg=239	ctermbg=235	cterm=italic
 		hi Cursor 		ctermfg=235	ctermbg=254	cterm=none
 		hi Constant 	ctermfg=144	ctermbg=235	cterm=none
-		hi CursorLine		       	ctermbg=236	cterm=none
+        hi ColorColumn              ctermbg=234 cterm=none
+		hi CursorLine		       	ctermbg=237	cterm=none
 		hi DiffAdd		ctermfg=235	ctermbg=74	cterm=none
 		hi DiffChange	ctermfg=235	ctermbg=144	cterm=none
 		hi DiffDelete	ctermfg=239	ctermbg=235	cterm=none

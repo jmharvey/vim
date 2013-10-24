@@ -171,6 +171,25 @@ set tags+=~/config/vim/vim/tags/stl.tags
 " cpp syntax {{{2
 let c_no_curly_error=1
 
+" color column {{{2
+" only set for cpp files (so moved to ftplugin
+"let &colorcolumn=join(range(1,120),",")
+"highlight ColorColumn ctermbg=234 guibg=#262626
+
+" create non-existant directories on file write{{{2
+function s:MkNonExDir(file, buf)
+    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+        let dir=fnamemodify(a:file, ':h')
+        if !isdirectory(dir)
+            call mkdir(dir, 'p')
+        endif
+    endif
+endfunction
+augroup BWCCreateDir
+    autocmd!
+    autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
+
 " plugins {{{1
 "Pathogen {{{2
 call pathogen#infect()
