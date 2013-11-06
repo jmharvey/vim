@@ -341,29 +341,9 @@ let g:quickrun_config.cpp = {
 "YankRing {{{2
 let g:yankring_history_dir='$HOME/.vim/tmp'
 
-"set efm=%*[^"]"%f"%*\D%l: %m,"%f"%*\D%l: %m,%-G%f:%l: (Each undeclared identifier is reported only once,%-G%f:%l: for each function it appears in.),%-GIn file included from %f:%l:%c:,%-GIn file included from %f:%l:%c\,,%-GIn file included from %f:%l:%c,%-GIn file included from %f:%l,%-G%*[ ]from %f:%l:%c,%-G%*[ ]from %f:%l:,%-G%*[ ]from %f:%l\,,%-G%*[ ]from %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,"%f"\, line %l%*\D%c%*[^ ] %m,%D%*\a[%*\d]: Entering directory `%f',%X%*\a[%*\d]: Leaving directory `%f',%D%*\a: Entering directory `%f',%X%*\a: Leaving directory `%f',%DMaking %*\a in %f,%f|%l| %m
-"set efm=%*[^\"]\"%f\"%*\D%l:\ %m,\"%f\"%*\D%l:\ %m,%-G%f:%l:\ (Each\ undeclared\ identifier\ is\ reported\ only\ once,%-G%f:%l:\ for\ each\ function\ it\ appears\ in.),%-GIn\ file\ included\ from\ %f:%l:%c:,%-GIn\ file\ included\ from\ %f:%l:%c\,,%-GIn\ file\ included\ from\ %f:%l:%c,%-GIn\ file\ included\ from\ %f:%l,%-G%*[\ ]from\ %f:%l:%c,%-G%*[\ ]from\ %f:%l:,%-G%*[\ ]from\ %f:%l\,,%-G%*[\ ]from\ %f:%l,%f:%l:%c:%m,%f(%l):%m,\ line\ %l%*\D%c%*[^\ ]\ %m,%D%*\a[%*\d]:\ Entering\ directory\ `%f',%X%*\a[%*\d]:\ Leaving\ directory\ `%f',%D%*\a:\ Entering\ directory\ `%f',%X%*\a:\ Leaving\ directory\ `%f',%DMaking\ %*\a\ in\ %f,%f|%l|\ %m
-"set efm=%*[^"]"%f"%*\D%l: %m
-"set efm="%f"%*\D%l: %m
-"set efm=%-G%f:%l: (Each undeclared identifier is reported only once
-"set efm=%-G%f:%l: for each function it appears in.)
-"set efm=%-GIn file included from %f:%l:%c:
-"set efm=%-GIn file included from %f:%l:%c\
-"set efm=%-GIn file included from %f:%l:%c\
-"set efm=%-GIn file included from %f:%l:%c
-"set efm=%-GIn file included from %f:%l
-"set efm=%-G%*[ ]from %f:%l:%c
-"set efm=%-G%*[ ]from %f:%l:
-"set efm=%-G%*[ ]from %f:%l\
-"set efm=%-G%*[ ]from %f:%l
-"set efm=%f:%l:%c:%m
-"set efm=%f(%l):%m
-"set efm=%f:%l:%m
-"set efm="%f"\
-"set efm= line %l%*\D%c%*[^ ] %m
-"set efm=%D%*\a[%*\d]: Entering directory `%f'
-"set efm=%X%*\a[%*\d]: Leaving directory `%f'
-"set efm=%D%*\a: Entering directory `%f'
-"set efm=%X%*\a: Leaving directory `%f'
-"set efm=%DMaking %*\a in %f,%f|%l| %m
+"CppLint {{{2
+let g:yankring_history_dir='$HOME/.vim/tmp'
+autocmd FileType cpp map <buffer> <F4> :call Cpplint()<CR>
+autocmd BufWritePost *.hpp,*.cpp,*.ipp call Cpplint()
+
 

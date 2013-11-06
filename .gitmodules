@@ -109,3 +109,6 @@
 [submodule "vim/bundle/template"]
 	path = vim/bundle/template
 	url = https://github.com/jmharvey/vim-template.git
+[submodule "vim/bundle/cpplint"]
+	path = vim/bundle/cpplint
+	url = https://github.com/funorpain/vim-cpplint.git
