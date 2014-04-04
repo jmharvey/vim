@@ -2,12 +2,6 @@
 " ~~~~~~~
 " vim: foldmethod=marker
 
-" general {{{1
-" Source the vimrc file after saving it {{{2
-if has("autocmd")
-   autocmd bufwritepost .vimrc source $MYVIMRC
-endif
-
 " misc {{{2
 set nocompatible
 filetype indent plugin on
@@ -106,10 +100,10 @@ nmap <silent> <leader>e :call ToggleList("Quickfix List", 'c')<CR>
 " window mgmt {{{2
 set nowrap
 set noequalalways
-nmap <silent> <C-h> :wincmd h<CR>
-nmap <silent> <C-j> :wincmd j<CR>
-nmap <silent> <C-k> :wincmd k<CR>
-nmap <silent> <C-l> :wincmd l<CR>
+"nmap <silent> <C-h> :wincmd h<CR>
+"nmap <silent> <C-j> :wincmd j<CR>
+"nmap <silent> <C-k> :wincmd k<CR>
+"nmap <silent> <C-l> :wincmd l<CR>
 "nmap <silent> <C-=> :wincmd =<CR>
 "nmap <silent> <C--> :wincmd _<CR>
 "nmap <silent> <C-|> :wincmd |<CR>
