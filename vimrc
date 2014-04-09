@@ -1,10 +1,216 @@
 " .VIMRC
 " ~~~~~~~
 " vim: foldmethod=marker
-
-" misc {{{2
+" general {{{1
 set nocompatible
+
+" plugins {{{1
+"Vundle {{{2
+filetype off
+" set vundle path
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+" bundles 
+" mine @ github
+Bundle 'jmharvey/vim-template'
+" vim-scripts @ github
+Bundle 'AsyncCommand'
+Bundle 'Conque-GDB'
+Bundle 'camelcasemotion'
+Bundle 'colorsupport.vim'
+Bundle 'Tasklist.vim'
+Bundle 'The-NERD-Commenter'
+Bundle 'The-NERD-tree'
+Bundle 'quickrun'
+Bundle 'YankRing.vim'
+Bundle 'ZoomWin'
+" other @ github
+Bundle 'wincent/Command-T'
+Bundle 'sjl/gundo.vim'
+Bundle 'ervandew/supertab'
+Bundle 'scrooloose/syntastic'
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-eunuch'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-dispatch'
+Bundle 'tpope/vim-tbone'
+Bundle 'int3/vim-extradite'
+Bundle 'derekwyatt/vim-fswitch'
+Bundle 'spiiph/vim-space'
+Bundle 'majutsushi/tagbar'
+Bundle 'flazz/vim-colorschemes'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'mileszs/ack.vim'
+Bundle 'proyvind/Cpp11-Syntax-Support'
+Bundle 'Rip-Rip/clang_complete'
+Bundle 'kshenoy/vim-signature'
+Bundle 't9md/vim-quickhl'
+Bundle 't9md/vim-tryit'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'funorpain/vim-cpplint'
+Bundle 'christoomey/vim-tmux-navigator'
+
 filetype indent plugin on
+
+"FSwitch - goto header/source file {{{2
+map <F6> :FSHere<CR>
+map! <F6> <Esc>:FSHere<CR>
+au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.,../include,./include/,./include/*,./include/*/*'
+au! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*'
+au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,./src/*/*'
+
+"TagBar {{{2
+map <F8> :TagbarToggle<CR>
+map! <F8> <Esc>:TagbarToggle<CR>
+let g:tagbar_width=45
+
+"NERD Tree {{{2
+map <F7> :NERDTreeToggle<CR>
+map! <F7> <Esc>:NERDTreeToggle<CR>
+let NERDTreeIgnore=['\.o$', '\~$']
+let NERDTreeShowBookmarks=1
+let NERDTreeWinSize=45
+let NERDTreeDirArrows=1
+let NERDTreeWinPos='right'
+let NERDTreeHijackNetrw=1
+
+"NERD Commenter {{{2
+map <F5> <Leader>c<Space>
+
+"clang complete {{{2
+let g:clang_use_library=1
+let g:clang_library_path="/usr/local/lib"
+let g:clang_complete_copen=1
+let g:clang_snippets=1
+let g:clang_trailing_placeholder=1
+let g:clang_user_options='-std=c++11'
+let g:clang_complete_macros=1
+let g:clang_complete_patterns=1
+map <F2>  :call g:ClangUpdateQuickFix()<CR>
+set completeopt-=preview
+
+"PowerLine {{{2
+let g:Powerline_symbols="compatible"
+
+"Command-T {{{2
+nnoremap <silent> <Leader>f :CommandT<CR>
+nnoremap <silent> <Leader>b :CommandTBuffer<CR>
+let g:CommandTMaxHeight=50
+set wildignore+=*.o,*.so
+
+"Gundo {{{2
+let g:gundo_right=1
+map <F9> :GundoToggle<CR>
+map! <F9> <Esc>:GundoToggle<CR>
+
+"AyncCommand {{{2
+set makeprg=/home/jharvey/scripts/make.sh
+
+function! AsyncRunTests()
+    let cmd = "./run_tests.sh
+    let title = "Install"
+    call asynccommand#run(cmd, asynchandler#quickfix("%f", ""))
+endfunction
+command! AsyncInstall call AsyncInstall()
+
+nnoremap <silent> <Leader>mm :AsyncMake "make"<CR>
+nnoremap <silent> <Leader>mn :AsyncMake "make clean && ./configure && make"<CR>
+nnoremap <silent> <Leader>mc :AsyncMake "make clean && cmake . && make"<CR>
+nnoremap <silent> <Leader>mi :AsyncInstall<CR>
+
+
+"TaskList {{{2
+let g:tlWindowPosition = 1
+map <leader>X <Plug>TaskList
+
+"Fugitive {{{2
+
+"CamelCaseMovement {{{2
+map w <Plug>CamelCaseMotion_w
+map b <Plug>CamelCaseMotion_b
+map e <Plug>CamelCaseMotion_e
+sunmap w
+sunmap b
+sunmap e
+omap iw <Plug>CamelCaseMotion_iw
+xmap iw <Plug>CamelCaseMotion_iw
+omap ib <Plug>CamelCaseMotion_ib
+xmap ib <Plug>CamelCaseMotion_ib
+omap ie <Plug>CamelCaseMotion_ie
+xmap ie <Plug>CamelCaseMotion_ie
+
+"Conque Terminal {{{2
+let g:ConqueTerm_Color=2
+let g:ConqueTerm_InsertOnEnter=1
+let g:ConqueTerm_CloseOnEnd=1
+let g:ConqueTerm_CWInsert=1
+let g:ConqueTerm_SendVisKey ='<Leader>sp'
+let g:ConqueTerm_ToggleKey = '<Leader>st'
+let g:ConqueTerm_TERM = 'xterm'
+
+nnoremap <silent> <Leader>sh :botright sp<CR>:resize 20<CR>:ConqueTerm zsh<CR>
+
+"eclim {{{2
+let g:EclimCSearchSingleResult='lopen'
+let g:EclimCHierarchyDefaultAction='vsplit'
+"let g:EclimProjectTreeAutoOpen=1
+let g:EclimProjectTreeExpandPathOnOpen=1
+
+"SuperTab {{{2
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
+let g:SuperTabClosePreviewOnPopupClose = 1
+
+
+"Syntastic {{{2
+let g:syntastic_mode_map = { 'mode': 'active',
+            \ 'active_filetypes': ['ruby', 'php'],
+            \ 'passive_filetypes': ['cpp'] }
+
+"Ack {{{2
+let g:ackprg="/home/jharvey/scripts/ack -H --nocolor --nogroup --column"
+
+"QuickHL {{{2
+nmap <Leader>h <Plug>(quickhl-toggle)
+xmap <Leader>h <Plug>(quickhl-toggle)
+nmap <Leader>H <Plug>(quickhl-reset)
+xmap <Leader>H <Plug>(quickhl-reset)
+nnoremap <silent> <Leader>j :QuickhlMatchAuto<CR>
+nnoremap <silent> <Leader>J :QuickhlMatchNoAuto<CR>:QuickhlMatchClear<CR>
+
+"TryIt {{{2
+let g:tryit_dir = "$HOME/.vim/tryit"
+nmap  <Leader>t <Plug>(tryit-this)
+xmap  <Leader>t <Plug>(tryit-this)
+nmap  <Leader>T <Plug>(tryit-ask)
+xmap  <Leader>T <Plug>(tryit-ask)
+
+"QuickRun {{{2
+let g:quickrun_config = {}
+let g:quickrun_config.cpp = {
+            \   'type': 'cpp/clang++',
+            \   'command': '/usr/local/bin/clang++',
+            \   'exec': ['%c %o %s -o %s:p:r', '%s:p:r %a'],
+            \   'tempfile': '%{tempname()}.cpp',
+            \   'hook/sweep/files': ['%S:p:r'],
+            \ }
+
+"YankRing {{{2
+let g:yankring_history_dir='$HOME/.vim/tmp'
+
+"CppLint {{{2
+let g:yankring_history_dir='$HOME/.vim/tmp'
+autocmd FileType cpp map <buffer> <F4> :call Cpplint()<CR>
+autocmd BufWritePost *.hpp,*.cpp,*.ipp call Cpplint()
+
+
+" user settings {{{1
+" misc {{{2
 syntax on
 set encoding=utf-8
 
@@ -183,161 +389,4 @@ augroup BWCCreateDir
     autocmd!
     autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
-
-" plugins {{{1
-"Pathogen {{{2
-call pathogen#infect()
-call pathogen#helptags()
-
-"FSwitch - goto header/source file {{{2
-map <F6> :FSHere<CR>
-map! <F6> <Esc>:FSHere<CR>
-au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.,../include,./include/,./include/*,./include/*/*'
-au! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*'
-au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,./src/*/*'
-
-"TagBar {{{2
-map <F8> :TagbarToggle<CR>
-map! <F8> <Esc>:TagbarToggle<CR>
-let g:tagbar_width=45
-
-"NERD Tree {{{2
-map <F7> :NERDTreeToggle<CR>
-map! <F7> <Esc>:NERDTreeToggle<CR>
-let NERDTreeIgnore=['\.o$', '\~$']
-let NERDTreeShowBookmarks=1
-let NERDTreeWinSize=45
-let NERDTreeDirArrows=1
-let NERDTreeWinPos='right'
-let NERDTreeHijackNetrw=1
-
-"NERD Commenter {{{2
-map <F5> <Leader>c<Space>
-
-"clang complete {{{2
-let g:clang_use_library=1
-let g:clang_library_path="/usr/local/lib"
-let g:clang_complete_copen=1
-let g:clang_snippets=1
-let g:clang_trailing_placeholder=1
-let g:clang_user_options='-std=c++11'
-let g:clang_complete_macros=1
-let g:clang_complete_patterns=1
-map <F2>  :call g:ClangUpdateQuickFix()<CR>
-set completeopt-=preview
-
-"PowerLine {{{2
-let g:Powerline_symbols="compatible"
-
-"Command-T {{{2
-nnoremap <silent> <Leader>f :CommandT<CR>
-nnoremap <silent> <Leader>b :CommandTBuffer<CR>
-let g:CommandTMaxHeight=50
-set wildignore+=*.o,*.so
-
-"Gundo {{{2
-let g:gundo_right=1
-map <F9> :GundoToggle<CR>
-map! <F9> <Esc>:GundoToggle<CR>
-
-"AyncCommand {{{2
-set makeprg=/home/jharvey/scripts/make.sh
-
-function! AsyncRunTests()
-    let cmd = "./run_tests.sh
-    let title = "Install"
-    call asynccommand#run(cmd, asynchandler#quickfix("%f", ""))
-endfunction
-command! AsyncInstall call AsyncInstall()
-
-nnoremap <silent> <Leader>mm :AsyncMake "make"<CR>
-nnoremap <silent> <Leader>mn :AsyncMake "make clean && ./configure && make"<CR>
-nnoremap <silent> <Leader>mc :AsyncMake "make clean && cmake . && make"<CR>
-nnoremap <silent> <Leader>mi :AsyncInstall<CR>
-
-
-"TaskList {{{2
-let g:tlWindowPosition = 1
-map <leader>X <Plug>TaskList
-
-"Fugitive {{{2
-
-"CamelCaseMovement {{{2
-map w <Plug>CamelCaseMotion_w
-map b <Plug>CamelCaseMotion_b
-map e <Plug>CamelCaseMotion_e
-sunmap w
-sunmap b
-sunmap e
-omap iw <Plug>CamelCaseMotion_iw
-xmap iw <Plug>CamelCaseMotion_iw
-omap ib <Plug>CamelCaseMotion_ib
-xmap ib <Plug>CamelCaseMotion_ib
-omap ie <Plug>CamelCaseMotion_ie
-xmap ie <Plug>CamelCaseMotion_ie
-
-"Conque Terminal {{{2
-let g:ConqueTerm_Color=2
-let g:ConqueTerm_InsertOnEnter=1
-let g:ConqueTerm_CloseOnEnd=1
-let g:ConqueTerm_CWInsert=1
-let g:ConqueTerm_SendVisKey ='<Leader>sp'
-let g:ConqueTerm_ToggleKey = '<Leader>st'
-let g:ConqueTerm_TERM = 'xterm'
-
-nnoremap <silent> <Leader>sh :botright sp<CR>:resize 20<CR>:ConqueTerm zsh<CR>
-
-"eclim {{{2
-let g:EclimCSearchSingleResult='lopen'
-let g:EclimCHierarchyDefaultAction='vsplit'
-"let g:EclimProjectTreeAutoOpen=1
-let g:EclimProjectTreeExpandPathOnOpen=1
-
-"SuperTab {{{2
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
-let g:SuperTabClosePreviewOnPopupClose = 1
-
-
-"Syntastic {{{2
-let g:syntastic_mode_map = { 'mode': 'active',
-            \ 'active_filetypes': ['ruby', 'php'],
-            \ 'passive_filetypes': ['cpp'] }
-
-"Ack {{{2
-let g:ackprg="/home/jharvey/scripts/ack -H --nocolor --nogroup --column"
-
-"QuickHL {{{2
-nmap <Leader>h <Plug>(quickhl-toggle)
-xmap <Leader>h <Plug>(quickhl-toggle)
-nmap <Leader>H <Plug>(quickhl-reset)
-xmap <Leader>H <Plug>(quickhl-reset)
-nnoremap <silent> <Leader>j :QuickhlMatchAuto<CR>
-nnoremap <silent> <Leader>J :QuickhlMatchNoAuto<CR>:QuickhlMatchClear<CR>
-
-"TryIt {{{2
-let g:tryit_dir = "$HOME/.vim/tryit"
-nmap  <Leader>t <Plug>(tryit-this)
-xmap  <Leader>t <Plug>(tryit-this)
-nmap  <Leader>T <Plug>(tryit-ask)
-xmap  <Leader>T <Plug>(tryit-ask)
-
-"QuickRun {{{2
-let g:quickrun_config = {}
-let g:quickrun_config.cpp = {
-            \   'type': 'cpp/clang++',
-            \   'command': '/usr/local/bin/clang++',
-            \   'exec': ['%c %o %s -o %s:p:r', '%s:p:r %a'],
-            \   'tempfile': '%{tempname()}.cpp',
-            \   'hook/sweep/files': ['%S:p:r'],
-            \ }
-
-"YankRing {{{2
-let g:yankring_history_dir='$HOME/.vim/tmp'
-
-"CppLint {{{2
-let g:yankring_history_dir='$HOME/.vim/tmp'
-autocmd FileType cpp map <buffer> <F4> :call Cpplint()<CR>
-autocmd BufWritePost *.hpp,*.cpp,*.ipp call Cpplint()
-
 
