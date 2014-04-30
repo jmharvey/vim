@@ -4,4 +4,6 @@ vim/plugin/eclim.vim
 *.swo
 vim/backup/*
 vim/tmp/*
-vim/.netrwhist
+.netrwhist
+vim/bundle/*
+

@@ -1,68 +1,141 @@
 " .VIMRC
 " ~~~~~~~
 " vim: foldmethod=marker
-" general {{{1
-set nocompatible
+" start-up {{{1
+if has('vim_starting')
+    set nocompatible
+    set rtp+=~/.vim/bundle/neobundle.vim/
+endif
 
 " plugins {{{1
-"Vundle {{{2
+"NeoBundle {{{2
 filetype off
 " set vundle path
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call neobundle#begin(expand('~/.vim/bundle/'))
 " bundles 
 " mine @ github
-Bundle 'jmharvey/vim-template'
+NeoBundle 'jmharvey/vim-template'
 " vim-scripts @ github
-Bundle 'AsyncCommand'
-Bundle 'Conque-GDB'
-Bundle 'camelcasemotion'
-Bundle 'colorsupport.vim'
-Bundle 'Tasklist.vim'
-Bundle 'The-NERD-Commenter'
-Bundle 'The-NERD-tree'
-Bundle 'quickrun'
-Bundle 'YankRing.vim'
-Bundle 'ZoomWin'
+NeoBundle 'argtextobj.vim'
+NeoBundle 'AsyncCommand'
+NeoBundle 'Conque-GDB'
+NeoBundle 'camelcasemotion'
+NeoBundle 'Tasklist.vim'
+NeoBundle 'The-NERD-Commenter'
+NeoBundle 'The-NERD-tree'
+NeoBundle 'quickrun'
+NeoBundle 'YankRing.vim'
+NeoBundle 'ZoomWin'
 " other @ github
-Bundle 'wincent/Command-T'
-Bundle 'sjl/gundo.vim'
-Bundle 'ervandew/supertab'
-Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-eunuch'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-tbone'
-Bundle 'int3/vim-extradite'
-Bundle 'derekwyatt/vim-fswitch'
-Bundle 'spiiph/vim-space'
-Bundle 'majutsushi/tagbar'
-Bundle 'flazz/vim-colorschemes'
-Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'mileszs/ack.vim'
-Bundle 'proyvind/Cpp11-Syntax-Support'
-Bundle 'Rip-Rip/clang_complete'
-Bundle 'kshenoy/vim-signature'
-Bundle 't9md/vim-quickhl'
-Bundle 't9md/vim-tryit'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'funorpain/vim-cpplint'
-Bundle 'christoomey/vim-tmux-navigator'
+NeoBundle 'sjl/gundo.vim'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'tpope/vim-commentary'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'tpope/vim-eunuch'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'tpope/vim-dispatch'
+NeoBundle 'tpope/vim-tbone'
+NeoBundle 'int3/vim-extradite'
+NeoBundle 'derekwyatt/vim-fswitch'
+NeoBundle 'spiiph/vim-space'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'proyvind/Cpp11-Syntax-Support'
+NeoBundle 'kshenoy/vim-signature'
+NeoBundle 't9md/vim-quickhl'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'edkolev/promptline.vim'
+NeoBundle 'edkolev/tmuxline.vim'
+NeoBundle 'funorpain/vim-cpplint'
+NeoBundle 'christoomey/vim-tmux-navigator'
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'kana/vim-operator-user'
+NeoBundle 'rhysd/vim-clang-format'
+NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'gregsexton/gitv'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
 
+call neobundle#end()
 filetype indent plugin on
+NeoBundleCheck
+
+" YouCompleteMe {{{2
+let g:ycm_global_ycm_extra_conf = '~/dev/.ycm_extra_conf.py'
+nnoremap <F2> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+
+" Clang Format {{{2
+let g:clang_format#code_style = 'google'
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -4,
+            \ "AllowShortIfStatementsOnASingleLine" : "false",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "BinPackParameters" : "false",
+            \ "Standard" : "C++11",
+            \ "BreakConstructorInitializersBeforeComma" : "false",
+            \ "ColumnLimit" : "140",
+            \ "IndentWidth" : "4",
+            \ "TabWidth" : "4",
+            \ "UseTab" : "Never",
+            \ "IndentCaseLabels" : "false",
+            \ "NamespaceIndentation" : "None",
+            \ "AllowAllParametersOfDeclarationOnNextLine" : "true",
+            \ "BreakBeforeBraces" : "Allman"}
+
+" Unite {{{2
+" file settings
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=tags    -start-insert tag<cr>
+nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     file_mru<cr>
+nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline outline<cr>
+nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+
+" yank settings
+let g:unite_source_history_yank_enable = 1
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    -resume history/yank<cr>
+
+" ag mappings
+let g:unite_source_grep_command='ag'
+let g:unite_source_grep_default_opts = '--nocolor --nogroup'
+let g:unite_source_grep_recursive_opt = ''
+noremap <silent> <Leader>sa :Unite grep:.::<C-R><C-w><CR>
+noremap <silent> <Leader>sf :Unite grep:%::<C-r><C-w><CR>
+noremap <silent> <Leader>ss :Unite grep:.<CR>
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+    " Play nice with supertab
+    let b:SuperTabDisabled=1
+    " Enable navigation with control-j and control-k in insert mode
+    imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+    imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
 
 "FSwitch - goto header/source file {{{2
 map <F6> :FSHere<CR>
 map! <F6> <Esc>:FSHere<CR>
-au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.,../include,./include/,./include/*,./include/*/*'
-au! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*'
-au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,./src/*/*'
+au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.,../include,./include/,./include/*,./include/*/*,../include/*,../include/*/*,../../include/,../../include/*,../../include/*/*'
+au! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*,../../src,../../src/*,../../src/*/*'
+au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*,../../src,../../src/*,../../src/*/*'
 
 "TagBar {{{2
 map <F8> :TagbarToggle<CR>
@@ -82,26 +155,44 @@ let NERDTreeHijackNetrw=1
 "NERD Commenter {{{2
 map <F5> <Leader>c<Space>
 
-"clang complete {{{2
-let g:clang_use_library=1
-let g:clang_library_path="/usr/local/lib"
-let g:clang_complete_copen=1
-let g:clang_snippets=1
-let g:clang_trailing_placeholder=1
-let g:clang_user_options='-std=c++11'
-let g:clang_complete_macros=1
-let g:clang_complete_patterns=1
-map <F2>  :call g:ClangUpdateQuickFix()<CR>
-set completeopt-=preview
 
-"PowerLine {{{2
-let g:Powerline_symbols="compatible"
+"Airline {{{2
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'tomorrow'
 
-"Command-T {{{2
-nnoremap <silent> <Leader>f :CommandT<CR>
-nnoremap <silent> <Leader>b :CommandTBuffer<CR>
-let g:CommandTMaxHeight=50
-set wildignore+=*.o,*.so
+"Promptline {{{2
+" sections (a, b, c, x, y, z, warn) are optional
+let g:promptline_preset = {
+        \'a' : [ '$VIMODE' ],
+        \'b' : [ promptline#slices#cwd() ],
+        \'c' : [ promptline#slices#vcs_branch(), promptline#slices#git_status(), promptline#slices#jobs()],
+        \'y' : [ promptline#slices#user() ],
+        \'z' : [ promptline#slices#host() ],
+        \'warn' : [ promptline#slices#last_exit_code()] }
+
+" available slices:
+"
+" promptline#slices#cwd() - current dir, truncated to 3 dirs. To configure: promptline#slices#cwd({ 'dir_limit': 4 })
+" promptline#slices#vcs_branch() - branch name only. by default only git branch is enabled. Use promptline#slices#vcs_branch({ 'hg': 1, 'svn': 1}) to enable check for svn and mercurial branches. Note that always checking if inside a branch slows down the prompt
+" promptline#slices#last_exit_code() - display exit code of last command if not zero
+" promptline#slices#jobs() - display number of shell jobs if more than zero
+" promptline#slices#battery() - display battery percentage (on OSX and linux) only if below 10%. Configure the threshold with promptline#slices#battery({ 'threshold': 25 })
+" promptline#slices#host()
+" promptline#slices#user()
+" promptline#slices#python_virtualenv() - display which virtual env is active (empty is none)
+" promptline#slices#git_status() - count of commits ahead/behind upstream, count of modified/added/unmerged files, symbol for clean branch and symbol for existing untraced files
+"
+" any command can be used in a slice, for example to print the output of whoami in section 'b':
+"       \'b' : [ '$(whoami)'],
+"
+" more than one slice can be placed in a section, e.g. print both host and user in section 'a':
+"       \'a': [ promptline#slices#host(), promptline#slices#user() ],
+"
+" to disable powerline symbols
+" `let g:promptline_powerline_symbols = 0`
+
+autocmd VimEnter * PromptlineSnapshot! ~/.shell_prompt.sh airline
 
 "Gundo {{{2
 let g:gundo_right=1
@@ -130,19 +221,6 @@ map <leader>X <Plug>TaskList
 
 "Fugitive {{{2
 
-"CamelCaseMovement {{{2
-map w <Plug>CamelCaseMotion_w
-map b <Plug>CamelCaseMotion_b
-map e <Plug>CamelCaseMotion_e
-sunmap w
-sunmap b
-sunmap e
-omap iw <Plug>CamelCaseMotion_iw
-xmap iw <Plug>CamelCaseMotion_iw
-omap ib <Plug>CamelCaseMotion_ib
-xmap ib <Plug>CamelCaseMotion_ib
-omap ie <Plug>CamelCaseMotion_ie
-xmap ie <Plug>CamelCaseMotion_ie
 
 "Conque Terminal {{{2
 let g:ConqueTerm_Color=2
@@ -155,22 +233,15 @@ let g:ConqueTerm_TERM = 'xterm'
 
 nnoremap <silent> <Leader>sh :botright sp<CR>:resize 20<CR>:ConqueTerm zsh<CR>
 
-"eclim {{{2
-let g:EclimCSearchSingleResult='lopen'
-let g:EclimCHierarchyDefaultAction='vsplit'
-"let g:EclimProjectTreeAutoOpen=1
-let g:EclimProjectTreeExpandPathOnOpen=1
-
-"SuperTab {{{2
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
-let g:SuperTabClosePreviewOnPopupClose = 1
-
+" Conque GDB {{{2
+let g:ConqueGdb_Leader = '<Leader>g'
 
 "Syntastic {{{2
-let g:syntastic_mode_map = { 'mode': 'active',
-            \ 'active_filetypes': ['ruby', 'php'],
-            \ 'passive_filetypes': ['cpp'] }
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_checkers = ['cpplint']
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_auto_loc_list=1
+autocmd InsertLeave *.hpp,*.cpp,*.ipp SyntasticCheck cpplint
 
 "Ack {{{2
 let g:ackprg="/home/jharvey/scripts/ack -H --nocolor --nogroup --column"
@@ -183,12 +254,6 @@ xmap <Leader>H <Plug>(quickhl-reset)
 nnoremap <silent> <Leader>j :QuickhlMatchAuto<CR>
 nnoremap <silent> <Leader>J :QuickhlMatchNoAuto<CR>:QuickhlMatchClear<CR>
 
-"TryIt {{{2
-let g:tryit_dir = "$HOME/.vim/tryit"
-nmap  <Leader>t <Plug>(tryit-this)
-xmap  <Leader>t <Plug>(tryit-this)
-nmap  <Leader>T <Plug>(tryit-ask)
-xmap  <Leader>T <Plug>(tryit-ask)
 
 "QuickRun {{{2
 let g:quickrun_config = {}
@@ -204,7 +269,6 @@ let g:quickrun_config.cpp = {
 let g:yankring_history_dir='$HOME/.vim/tmp'
 
 "CppLint {{{2
-let g:yankring_history_dir='$HOME/.vim/tmp'
 autocmd FileType cpp map <buffer> <F4> :call Cpplint()<CR>
 autocmd BufWritePost *.hpp,*.cpp,*.ipp call Cpplint()
 
@@ -318,17 +382,18 @@ set winheight=1
 
 "Colour Schemes {{{2
 set t_Co=256
-set background=dark
-colorscheme custom_kellys
+set background=light
+"colorscheme custom_kellys
+colorscheme Tomorrow
 
 " set font {{{2
-set guifont=Monospace\ 8
+set guifont=Terminess\ Powerline\ 8
 
-"set highlighting for bash vi mode {{{2
-au BufRead,BufNewFile bash-fc-* set filetype=sh
-
-"set CMakeCommon.txt to to have cmake filetype
+"set CMakeCommon.txt to to have cmake filetype {{{2
 au BufRead,BufNewFile CMakeCommon.txt set filetype=cmake
+
+" highlight trailing whitespace {{{2
+match Todo /\s\+$/
 
 "Configure the cursor {{{2
 if &term =~ "xterm\\|rxvt"
