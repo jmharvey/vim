@@ -77,8 +77,10 @@ NeoBundleCheck
 
 " YouCompleteMe {{{2
 let g:ycm_global_ycm_extra_conf = '~/dev/.ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_insertion = 1
 nnoremap <F2> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
+set completeopt-=preview
 
 " Clang Format {{{2
 let g:clang_format#code_style = 'google'
@@ -240,7 +242,7 @@ let g:ConqueGdb_Leader = '<Leader>g'
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_checkers = ['cpplint']
 let g:syntastic_aggregate_errors = 1
-let g:syntastic_auto_loc_list=1
+let g:syntastic_auto_loc_list=2
 autocmd InsertLeave *.hpp,*.cpp,*.ipp SyntasticCheck cpplint
 
 "Ack {{{2
@@ -379,6 +381,8 @@ set noequalalways
 "nmap <silent> <C-|> :wincmd |<CR>
 set winminheight=0
 set winheight=1
+set splitbelow
+set splitright
 
 "Colour Schemes {{{2
 set t_Co=256
