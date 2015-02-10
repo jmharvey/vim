@@ -161,7 +161,7 @@ endfunction
 "FSwitch - goto header/source file {{{2
 map <F6> :FSHere<CR>
 map! <F6> <Esc>:FSHere<CR>
-au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.,../include,./include/,./include/*,./include/*/*,../include/*,../include/*/*,../../include/,../../include/*,../../include/*/*'
+au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.,../include,./include/,./include/*,./include/*/*,../include/*,../include/*/*,../../include/,../../include/*,../../include/*/*,./includes/../includes/'
 au! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*,../../src,../../src/*,../../src/*/*'
 au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*,../../src,../../src/*,../../src/*/*'
 
@@ -344,7 +344,6 @@ set expandtab
 set tabstop=4
 
 map Y y$
-nnoremap <C-L> :nohl<CR><C-L>
 
 "grep {{{2
 function! LocalGrep(text)
