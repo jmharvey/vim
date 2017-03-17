@@ -17,14 +17,12 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundle 'jmharvey/vim-template'
 " vim-scripts @ github
 NeoBundle 'argtextobj.vim'
-NeoBundle 'AsyncCommand'
 NeoBundle 'Conque-GDB'
 NeoBundle 'camelcasemotion'
 NeoBundle 'Tasklist.vim'
 NeoBundle 'The-NERD-Commenter'
 NeoBundle 'The-NERD-tree'
 NeoBundle 'quickrun'
-NeoBundle 'YankRing.vim'
 NeoBundle 'ZoomWin'
 " other @ github
 NeoBundle 'sjl/gundo.vim'
@@ -49,16 +47,17 @@ NeoBundle 'mileszs/ack.vim'
 NeoBundle 'proyvind/Cpp11-Syntax-Support'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 't9md/vim-quickhl'
-NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'edkolev/promptline.vim'
 NeoBundle 'edkolev/tmuxline.vim'
-NeoBundle 'funorpain/vim-cpplint'
 NeoBundle 'christoomey/vim-tmux-navigator'
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'rhysd/vim-clang-format'
+NeoBundle 'skywind3000/asyncrun.vim'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'airblade/vim-gitgutter'
@@ -220,7 +219,7 @@ let g:promptline_preset = {
 " to disable powerline symbols
 " `let g:promptline_powerline_symbols = 0`
 
-autocmd VimEnter * PromptlineSnapshot! ~/.shell_prompt.sh airline
+"autocmd VimEnter * PromptlineSnapshot! ~/.shell_prompt.sh airline
 
 "Gundo {{{2
 let g:gundo_right=1
@@ -228,7 +227,7 @@ map <F9> :GundoToggle<CR>
 map! <F9> <Esc>:GundoToggle<CR>
 
 "AyncCommand {{{2
-set makeprg=/home/jharvey/scripts/make.sh
+set makeprg=/home/jharvey/Scripts/make.sh
 
 function! AsyncRunTests()
     let cmd = "./run_tests.sh
@@ -266,10 +265,10 @@ let g:ConqueGdb_Leader = '<Leader>g'
 
 "Syntastic {{{2
 let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_checkers = ['cpplint']
+let g:syntastic_cpp_checkers = ['']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list=2
-autocmd InsertLeave *.hpp,*.cpp,*.ipp SyntasticCheck cpplint
+"autocmd InsertLeave *.hpp,*.cpp,*.ipp SyntasticCheck cpplint
 
 "Ack {{{2
 let g:ackprg="/home/jharvey/scripts/ack -H --nocolor --nogroup --column"
@@ -293,12 +292,6 @@ let g:quickrun_config.cpp = {
             \   'hook/sweep/files': ['%S:p:r'],
             \ }
 
-"YankRing {{{2
-let g:yankring_history_dir='$HOME/.vim/tmp'
-
-"CppLint {{{2
-autocmd FileType cpp map <buffer> <F4> :call Cpplint()<CR>
-autocmd BufWritePost *.hpp,*.cpp,*.ipp call Cpplint()
 
 
 " user settings {{{1
