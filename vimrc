@@ -45,7 +45,9 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang_completer' }
+if version > 704 || (version == 704 && has("patch1578"))
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang_completer' }
+endif
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-peekaboo'
@@ -54,7 +56,9 @@ Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 " termdebug
-packadd termdebug
+if has("packages")
+    packadd termdebug
+endif
 
 " YouCompleteMe {{{2
 let g:ycm_global_ycm_extra_conf = '~/dev/.ycm_extra_conf.py'
