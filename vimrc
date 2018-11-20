@@ -2,79 +2,59 @@
 " ~~~~~~~
 " vim: foldmethod=marker
 " start-up {{{1
-if has('vim_starting')
+if &compatible
     set nocompatible
-    set rtp+=~/.vim/bundle/neobundle.vim/
 endif
 
 " plugins {{{1
-"NeoBundle {{{2
-filetype off
-" set vundle path
-call neobundle#begin(expand('~/.vim/bundle/'))
-" bundles 
+" install vim-plug first
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+" packages
+call plug#begin('~/.vim/plugged')
 " mine @ github
-NeoBundle 'jmharvey/vim-template'
-" vim-scripts @ github
-NeoBundle 'argtextobj.vim'
-NeoBundle 'Conque-GDB'
-NeoBundle 'camelcasemotion'
-NeoBundle 'Tasklist.vim'
-NeoBundle 'The-NERD-Commenter'
-NeoBundle 'The-NERD-tree'
-NeoBundle 'quickrun'
-NeoBundle 'ZoomWin'
+Plug 'jmharvey/vim-template'
 " other @ github
-NeoBundle 'sjl/gundo.vim'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'tpope/vim-commentary'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'tpope/vim-eunuch'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'tpope/vim-dispatch'
-NeoBundle 'tpope/vim-tbone'
-NeoBundle 'int3/vim-extradite'
-NeoBundle 'derekwyatt/vim-fswitch'
-NeoBundle 'spiiph/vim-space'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'mileszs/ack.vim'
-NeoBundle 'proyvind/Cpp11-Syntax-Support'
-NeoBundle 'kshenoy/vim-signature'
-NeoBundle 't9md/vim-quickhl'
-NeoBundle 'vim-airline/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
-NeoBundle 'edkolev/promptline.vim'
-NeoBundle 'edkolev/tmuxline.vim'
-NeoBundle 'christoomey/vim-tmux-navigator'
-NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'kana/vim-operator-user'
-NeoBundle 'rhysd/vim-clang-format'
-NeoBundle 'skywind3000/asyncrun.vim'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'gregsexton/gitv'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
+Plug 'sjl/gundo.vim'
+Plug 'w0rp/ale'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-tbone'
+Plug 'tpope/vim-projectionist'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'bkad/CamelCaseMotion'
+Plug 'vim-scripts/argtextobj.vim'
+Plug 'majutsushi/tagbar'
+Plug 'flazz/vim-colorschemes'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'altercation/vim-colors-solarized'
+Plug 'mileszs/ack.vim'
+Plug 'kshenoy/vim-signature'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'edkolev/promptline.vim'
+Plug 'edkolev/tmuxline.vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang_completer' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-peekaboo'
+Plug 'gregsexton/gitv'
+Plug 'airblade/vim-gitgutter'
+call plug#end()
 
-call neobundle#end()
-filetype indent plugin on
-NeoBundleCheck
+" termdebug
+packadd termdebug
 
 " YouCompleteMe {{{2
 let g:ycm_global_ycm_extra_conf = '~/dev/.ycm_extra_conf.py'
@@ -82,87 +62,6 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 nnoremap <F2> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 set completeopt-=preview
-
-" UltiSnips {{{2
-let g:UltiSnipsExpandTrigger       = "<tab>"
-let g:UltiSnipsJumpForwardTrigger  = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:UltiSnipsSnippetDirectories  = ["snips"]
-
-function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
-            endif
-        endif
-    endif
-    return ""
-endfunction
-
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-
-
-" Clang Format {{{2
-let g:clang_format#code_style = 'google'
-let g:clang_format#style_options = {
-            \ "AccessModifierOffset" : -4,
-            \ "AllowShortIfStatementsOnASingleLine" : "false",
-            \ "AlwaysBreakTemplateDeclarations" : "true",
-            \ "BinPackParameters" : "false",
-            \ "Standard" : "C++11",
-            \ "BreakConstructorInitializersBeforeComma" : "false",
-            \ "ColumnLimit" : "140",
-            \ "IndentWidth" : "4",
-            \ "TabWidth" : "4",
-            \ "UseTab" : "Never",
-            \ "IndentCaseLabels" : "false",
-            \ "NamespaceIndentation" : "None",
-            \ "AllowAllParametersOfDeclarationOnNextLine" : "true",
-            \ "BreakBeforeBraces" : "Allman"}
-
-" Unite {{{2
-" file settings
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=tags    -start-insert tag<cr>
-nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     file_mru<cr>
-nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline outline<cr>
-nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-
-" yank settings
-let g:unite_source_history_yank_enable = 1
-nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    -resume history/yank<cr>
-
-" ag mappings
-let g:unite_source_grep_command='ag'
-let g:unite_source_grep_default_opts = '--nocolor --nogroup'
-let g:unite_source_grep_recursive_opt = ''
-noremap <silent> <Leader>sa :Unite grep:.::<C-R><C-w><CR>
-noremap <silent> <Leader>sf :Unite grep:%::<C-r><C-w><CR>
-noremap <silent> <Leader>ss :Unite grep:.<CR>
-
-" Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-    " Play nice with supertab
-    let b:SuperTabDisabled=1
-    " Enable navigation with control-j and control-k in insert mode
-    imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-endfunction
-
-"FSwitch - goto header/source file {{{2
-map <F6> :FSHere<CR>
-map! <F6> <Esc>:FSHere<CR>
-au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.,../include,./include/,./include/*,./include/*/*,../include/*,../include/*/*,../../include/,../../include/*,../../include/*/*,./includes/../includes/'
-au! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*,../../src,../../src/*,../../src/*/*'
-au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.,../src,..,./src/*,src/*/*,../../src,../../src/*,../../src/*/*'
 
 "TagBar {{{2
 map <F8> :TagbarToggle<CR>
@@ -184,18 +83,22 @@ map <F5> <Leader>c<Space>
 
 
 "Airline {{{2
-let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts=0
+let g:airline_left_set=' '
+let g:airline_right_set=' '
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_theme = 'tomorrow'
 
 "Promptline {{{2
 " sections (a, b, c, x, y, z, warn) are optional
 let g:promptline_preset = {
         \'a' : [ '$VIMODE' ],
-        \'b' : [ promptline#slices#cwd() ],
-        \'c' : [ promptline#slices#vcs_branch(), promptline#slices#git_status(), promptline#slices#jobs()],
-        \'y' : [ promptline#slices#user() ],
-        \'z' : [ promptline#slices#host() ],
+        \'b' : [ promptline#slices#user() ],
+        \'c' : [ promptline#slices#host() ],
+        \'y' : [ promptline#slices#cwd() ],
+        \'z' : [ promptline#slices#vcs_branch(), promptline#slices#git_status(), promptline#slices#jobs()],
         \'warn' : [ promptline#slices#last_exit_code()] }
 
 " available slices:
@@ -217,82 +120,39 @@ let g:promptline_preset = {
 "       \'a': [ promptline#slices#host(), promptline#slices#user() ],
 "
 " to disable powerline symbols
-" `let g:promptline_powerline_symbols = 0`
+let g:promptline_powerline_symbols = 0
 
-"autocmd VimEnter * PromptlineSnapshot! ~/.shell_prompt.sh airline
+autocmd VimEnter * PromptlineSnapshot! ~/.promptline.sh airline
 
+"Tmuxline {{{2
+" to disable powerline symbols
+let g:tmuxline_powerline_symbols = 0
+let g:tmuxline_separators = {
+    \ 'left' : '',
+    \ 'left_alt': '|',
+    \ 'right' : '',
+    \ 'right_alt' : '|',
+    \ 'space' : ' '}
 "Gundo {{{2
 let g:gundo_right=1
 map <F9> :GundoToggle<CR>
 map! <F9> <Esc>:GundoToggle<CR>
 
-"AyncCommand {{{2
-set makeprg=/home/jharvey/Scripts/make.sh
-
-function! AsyncRunTests()
-    let cmd = "./run_tests.sh
-    let title = "Install"
-    call asynccommand#run(cmd, asynchandler#quickfix("%f", ""))
-endfunction
-command! AsyncInstall call AsyncInstall()
-
-nnoremap <silent> <Leader>mm :AsyncMake "make"<CR>
-nnoremap <silent> <Leader>mn :AsyncMake "make clean && ./configure && make"<CR>
-nnoremap <silent> <Leader>mc :AsyncMake "make clean && cmake . && make"<CR>
-nnoremap <silent> <Leader>mi :AsyncInstall<CR>
-
-
-"TaskList {{{2
-let g:tlWindowPosition = 1
-map <leader>X <Plug>TaskList
-
-"Fugitive {{{2
-
-
-"Conque Terminal {{{2
-let g:ConqueTerm_Color=2
-let g:ConqueTerm_InsertOnEnter=1
-let g:ConqueTerm_CloseOnEnd=1
-let g:ConqueTerm_CWInsert=1
-let g:ConqueTerm_SendVisKey ='<Leader>sp'
-let g:ConqueTerm_ToggleKey = '<Leader>st'
-let g:ConqueTerm_TERM = 'xterm'
-
-nnoremap <silent> <Leader>sh :botright sp<CR>:resize 20<CR>:ConqueTerm zsh<CR>
-
-" Conque GDB {{{2
-let g:ConqueGdb_Leader = '<Leader>g'
-
-"Syntastic {{{2
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_checkers = ['']
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_auto_loc_list=2
-"autocmd InsertLeave *.hpp,*.cpp,*.ipp SyntasticCheck cpplint
+" fzf {{{2
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>a :Ag<CR>
+nnoremap <leader>t :BTags<CR>
 
 "Ack {{{2
 let g:ackprg="/home/jharvey/scripts/ack -H --nocolor --nogroup --column"
 
-"QuickHL {{{2
-nmap <Leader>h <Plug>(quickhl-toggle)
-xmap <Leader>h <Plug>(quickhl-toggle)
-nmap <Leader>H <Plug>(quickhl-reset)
-xmap <Leader>H <Plug>(quickhl-reset)
-nnoremap <silent> <Leader>j :QuickhlMatchAuto<CR>
-nnoremap <silent> <Leader>J :QuickhlMatchNoAuto<CR>:QuickhlMatchClear<CR>
-
-
-"QuickRun {{{2
-let g:quickrun_config = {}
-let g:quickrun_config.cpp = {
-            \   'type': 'cpp/clang++',
-            \   'command': '/usr/local/bin/clang++',
-            \   'exec': ['%c %o %s -o %s:p:r', '%s:p:r %a'],
-            \   'tempfile': '%{tempname()}.cpp',
-            \   'hook/sweep/files': ['%S:p:r'],
-            \ }
-
-
+"Dispatch {{{2
+" set compile command in project .vimrc
+nnoremap <leader>mc :Dispatch g:local#cmake_command<CR>
+nnoremap <leader>mm :Dispatch g:local#make_command<CR>
+nnoremap <leader>mt :Dispatch g:local#test_command<CR>
+nnoremap <leader>mf :Dispatch g:local#test_command . " --gtest_filter="
 
 " user settings {{{1
 " misc {{{2
@@ -477,3 +337,6 @@ augroup BWCCreateDir
     autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
 
+" source project specific settings{{{2
+set exrc
+set secure
