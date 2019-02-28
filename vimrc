@@ -53,6 +53,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'gregsexton/gitv'
 Plug 'airblade/vim-gitgutter'
+Plug 'iberianpig/tig-explorer.vim'
 call plug#end()
 
 " termdebug
@@ -313,8 +314,8 @@ hi CursorLine ctermbg=230 guibg=#303030
 
 "ctags {{{2
 " map <ctrl>+F12 to generate ctags for current folder:
-au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
-map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
+au BufWritePost *.c,*.cpp,*.h silent! !ctags -R --exclude='*.js'&
+map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude='*.js' .<CR><CR>
 " add current directory's generated tags file to available tags
 set tags+=./tags;/
 set tags+=~/config/vim/vim/tags/stl.tags
